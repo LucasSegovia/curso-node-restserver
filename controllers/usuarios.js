@@ -65,15 +65,9 @@ const usuariosPatch = (req, res = response) => {
 const usuariosDelete = async(req, res = response) => {
 
     const { id } = req.params;
-
-    //ELIMINAR FISICAMENTE
-    //const usuario = await Usuario.findByIdAndDelete(id);
-
     //CON ESTO EL REGISTRO SE ELIMINA EN EL FRONT PERO EN EL BACK QUEDA
     const usuario = await Usuario.findByIdAndUpdate(id, {estado:false});
-
-
-    res.json(usuario);
+    res.json({usuario});
 }//FIN USUARIOS DELETE
 
 //MODULOS A EXPORTAR
