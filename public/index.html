@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sign-in</title>
+    <title>Google Signin</title>
 </head>
 <body>
-    <h1>Google Sign-in</h1>
+    <h1>Google Signin</h1>
     <hr>
 
     <div id="g_id_onload"
          data-client_id="546064370692-0iq13qad40uii5pi3idelqfqggm9kstm.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse"
          data-auto_prompt="false"
-         data-callback="handleCredentialResponse">
+         data-auto_select="true"">
       </div>
+
       <div class="g_id_signin"
          data-type="standard"
          data-size="large"
@@ -25,23 +27,24 @@
       </div>
 
 
-      <button id="google_signout">Google Sign-Out</button>
+      <button id="g_id_signout">Google Sign-Out</button>
 
-      <script src="http://accounts.google.com/gsi/client" async defer></script>
+      
 
       <script>
+
           function handleCredentialResponse(response) {
               //GOOGLE TOKEN: ID TOKEN
              const body = { id_token: response.credential }
   
-             fetch('http://localhost:8080/api/auth/google','https://restserver-curso-node-lseg.herokuapp.com', {
+             fetch('http://localhost:8080/api/auth/google', {
                  method:'POST',
                  headers:{
                      'Content-Type':'application/json'
                  },
                  body: JSON.stringify(body)
              })
-                  .then(r  => r.json() )
+                  .then(r => r.json() )
                   .then(resp => {
                       console.log(resp)
                       localStorage.setItem('email',resp.usuario.correo)
@@ -49,7 +52,9 @@
                   .catch(console.warn);
           }//FIN FUNCIOn
 
-          const button = document.getElementById('google_signout');
+
+          
+          const button = document.getElementById('g_id_signout');
 
           button.onclick = () =>{
                 console.log( google.accounts.id )
@@ -62,6 +67,7 @@
             }
 
         </script>
+        <script src="http://accounts.google.com/gsi/client" async defer></script>
 </body>
 
 </html>
